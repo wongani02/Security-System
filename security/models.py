@@ -20,7 +20,8 @@ class UserSecurityCredential(models.Model):
     user_qr_code = models.ImageField(
         upload_to='user_qr_codes/', 
         null=True,
-        verbose_name=_("Security QR code")
+        verbose_name=_("Security QR code"),
+        blank=True
     )
     is_active = models.BooleanField(
         default=True
@@ -78,14 +79,15 @@ class SecurityLog(models.Model):
     )
     access_pass = models.ForeignKey(UserSecurityCredential, on_delete=models.CASCADE, null=True)
     session_id = models.CharField(max_length=200, null=True)
-    entry_img = models.ImageField(upload_to='entry_img/', null=True)
+    entry_img = models.CharField(max_length=100, null=True)
     entry_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
         verbose_name=_("date and time at which staff entered the room"),
         help_text=_("format: Y-m-d H:M:S"),
     )
-    exit_img = models.ImageField(upload_to='exit_img/', null=True)
+    entry_status = models.BooleanField(null=True)
+    exit_img = models.CharField(max_length=100, null=True)
     exit_at = models.DateTimeField(
         auto_now=True,
         verbose_name=_("date and time at which staff exited the room"),
