@@ -89,7 +89,8 @@ class SecurityLog(models.Model):
     entry_status = models.BooleanField(null=True)
     exit_img = models.CharField(max_length=100, null=True)
     exit_at = models.DateTimeField(
-        auto_now=True,
+        null=True,
+        blank=True,
         verbose_name=_("date and time at which staff exited the room"),
         help_text=_("format: Y-m-d H:M:S"),
     ) 
