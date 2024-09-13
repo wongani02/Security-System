@@ -12,8 +12,8 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 
 django.setup()
 
-TWILIO_ACCOUNT_SID = '************************'
-TWILIO_ACCOUNT_AUTH_TOKEN = '**************************'
+TWILIO_ACCOUNT_SID = os.environ()
+TWILIO_ACCOUNT_AUTH_TOKEN = os.environ()
 
 Twilio_Phone_Number = '####'
 admin_Phone = '######'
