@@ -51,7 +51,7 @@ class SecuredDoor(models.Model):
         null=True
     )
     door_number = models.PositiveIntegerField(null=True)
-    permitted_users = models.ManyToManyField(UserSecurityCredential, related_name='permitted_user_list')
+    permitted_users = models.ManyToManyField(UserSecurityCredential, related_name='permitted_user_list', blank=True)
     is_active = models.BooleanField(
         default=True
     )

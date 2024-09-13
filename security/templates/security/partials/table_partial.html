@@ -1,0 +1,30 @@
+{% load static %}
+    <tbody id="table-container-xx">
+        {% for item in logs %}
+        <tr>
+        <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+            ID {{item.session_id}}
+        </td>
+        <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+            {{item.access_pass.card_name}}
+        </td>
+        <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+            {{item.door.door_name}}
+        </td>
+        <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+            {{item.entry_at}}
+        </td>
+        <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+            {{item.entry_img}}
+        </td>
+        <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+            {% if item.entry_status %}
+            <div class="badge bg-success text-white">Success</div>
+            {% else %}
+            <div class="badge bg-error text-white">Denied</div>
+            {% endif %}
+        </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+

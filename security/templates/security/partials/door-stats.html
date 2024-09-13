@@ -1,0 +1,71 @@
+{% load static %}
+{% load custom_template_tags %}
+
+<div id="door-stats-xx" class="mt-6 grid grid-cols-2 gap-x-4 gap-y-8">
+
+    <div>
+    <p
+        class="text-xs uppercase text-slate-400 dark:text-navy-300"
+    >
+        Total Doors
+    </p>
+    <p
+        class="mt-1 text-xl font-medium text-slate-700 dark:text-navy-100"
+    >
+        {{doors.count}}
+    </p>
+    </div>
+
+    <div>
+    <p
+        class="text-xs uppercase text-slate-400 dark:text-navy-300"
+    >
+        Total Scans
+    </p>
+    <p class="mt-1">
+        <span
+        class="text-xl font-medium text-slate-700 dark:text-navy-100"
+        >
+        {{logs.count}}
+        </span>
+        <span class="text-xs text-success">+3%</span>
+    </p>
+    </div>
+    <div>
+    <p
+        class="text-xs uppercase text-slate-400 dark:text-navy-300"
+    >
+        Succcessful Scans
+    </p>
+    <p
+        class="mt-1 text-xl font-medium text-slate-700 dark:text-navy-100"
+    >
+        {{successful.count}}
+    </p>
+    </div>
+    <div>
+    <p
+        class="text-xs uppercase text-slate-400 dark:text-navy-300"
+    >
+        Scans Declined
+    </p>
+    <p
+        class="mt-1 text-xl font-medium text-slate-700 dark:text-navy-100"
+    >
+        {{declined.count}}
+    </p>
+    </div>
+    <div>
+    <p
+        class="text-xs uppercase text-slate-400 dark:text-navy-300"
+    >
+        Total Door Scans
+    </p>
+    <p
+        class="mt-1 text-xl font-medium text-slate-700 dark:text-navy-100"
+    >
+        {{total_door_scans.count}}
+    </p>
+    </div>
+    
+</div>

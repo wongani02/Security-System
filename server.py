@@ -3,6 +3,7 @@ import os
 import sys
 import django
 import json
+from twilio.rest import Client
 
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -10,6 +11,14 @@ sys.path.insert(0, PROJECT_ROOT)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings") 
 
 django.setup()
+
+TWILIO_ACCOUNT_SID = 'ACf0ef664b8809fb210a39f6b22138d75b'
+TWILIO_ACCOUNT_AUTH_TOKEN = '4f386b12583ead0fd9f6d0fcb3278207'
+
+Twilio_Phone_Number = '####'
+admin_Phone = '######'
+
+twilio_client = Client(TWILIO_ACCOUNT_SID, TWILIO_ACCOUNT_AUTH_TOKEN)
 
 
 def get_host_ip():
@@ -59,32 +68,41 @@ try:
             json_data = json.loads(decoded_data)
             print(json_data)
 
-            user = UserSecurityCredential.objects.get(card_uid=json_data['id'])
-            print(user)
+            response_to_server = {'access': False }
+            try:
+                user = UserSecurityCredential.objects.get(card_uid=json_data['id'])
+                print(user)
 
-            door = SecuredDoor.objects.get(id=json_data['door_id'])
-            print(door)
+                door = SecuredDoor.objects.get(id=json_data['door_id'])
+                print(door)
 
-            response_to_server = None
-            if user in door.permitted_users.all():
-                log = SecurityLog.objects.create(
-                    door=door,
-                    access_pass=user,
-                    session_id=json_data['session_id'],
-                    entry_img=json_data['image_id'],
-                    entry_status=True
-                )
-                response_to_server={'access': True }
-            else:
-                log = SecurityLog.objects.create(
-                    door=door,
-                    access_pass=user,
-                    session_id=json_data['session_id'],
-                    entry_img=json_data['image_id'],
-                    entry_status=False
-                )
-                response_to_server={'access': False }
+                response_to_server = None
+                if user in door.permitted_users.all():
+                    log = SecurityLog.objects.create(
+                        door=door,
+                        access_pass=user,
+                        session_id=json_data['session_id'],
+                        entry_img=json_data['image_id'],
+                        entry_status=True
+                    )
+                    response_to_server={'access': True }
+                else:
+                    log = SecurityLog.objects.create(
+                        door=door,
+                        access_pass=user,
+                        session_id=json_data['session_id'],
+                        entry_img=json_data['image_id'],
+                        entry_status=False
+                    )
+                    response_to_server={'access': False }
 
+                    twilio_client.messages.create(
+                        body=f'{user.card_name} tried to access {door.door_name}.',
+                        from_=Twilio_Phone_Number,
+                        to=admin_Phone
+                    )
+            except Exception as e:
+                print('ERROR: ', e)
         
             response_to_server = json.dumps(response_to_server)
             conn.sendall(response_to_server.encode('utf-8'))

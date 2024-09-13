@@ -85,60 +85,40 @@
                 Primary
               </div>
             </div>
-            <div class="space-y-4">
-              <label class="block">
-                <span>Card number</span>
-                <input
-                  class="form-input mt-1.5 w-full rounded-lg bg-slate-150 px-3 py-2 ring-primary/50 placeholder:text-slate-400 hover:bg-slate-200 focus:ring dark:bg-navy-900/90 dark:ring-accent/50 dark:placeholder:text-navy-300 dark:hover:bg-navy-900 dark:focus:bg-navy-900"
-                  placeholder="**** **** **** ****"
-                  type="text"
-                  x-model.debounce="cardNumber"
-                  x-input-mask="creditCardInput"
-                />
-              </label>
-              <label class="block">
-                <span>Name on card</span>
-                <input
-                  class="form-input mt-1.5 w-full rounded-lg bg-slate-150 px-3 py-2 ring-primary/50 placeholder:text-slate-400 hover:bg-slate-200 focus:ring dark:bg-navy-900/90 dark:ring-accent/50 dark:placeholder:text-navy-300 dark:hover:bg-navy-900 dark:focus:bg-navy-900"
-                  placeholder="John Doe"
-                  type="text"
-                  x-model.debounce="nameOnCard"
-                />
-              </label>
-              <div class="grid grid-cols-2 gap-4">
+            <form id="form-container-xx" hx-post="{% url 'security:add-card' %}" hx-target="#form-container-xx" hx-swap="outerHTML">
+              {% csrf_token %}
+              <div class="space-y-4">
                 <label class="block">
-                  <span>Expiration date</span>
-                  <input
-                    class="form-input mt-1.5 w-full rounded-lg bg-slate-150 px-3 py-2 ring-primary/50 placeholder:text-slate-400 hover:bg-slate-200 focus:ring dark:bg-navy-900/90 dark:ring-accent/50 dark:placeholder:text-navy-300 dark:hover:bg-navy-900 dark:focus:bg-navy-900"
-                    placeholder="mm/yy"
-                    type="text"
-                    x-input-mask="{ date: true, datePattern: ['m', 'y'] }"
-                  />
+                  <span>Card number</span>
+                  {{form.rfid_number}}
+                  
                 </label>
                 <label class="block">
-                  <span>CVV</span>
-                  <input
-                    class="form-input mt-1.5 w-full rounded-lg bg-slate-150 px-3 py-2 ring-primary/50 placeholder:text-slate-400 hover:bg-slate-200 focus:ring dark:bg-navy-900/90 dark:ring-accent/50 dark:placeholder:text-navy-300 dark:hover:bg-navy-900 dark:focus:bg-navy-900"
-                    placeholder="***"
-                    type="password"
-                    x-input-mask="{ numeral: true }"
-                    maxlength="3"
-                  />
+                  <span>Name on card</span>
+                  {{form.name_on_card}}
+                  
                 </label>
+                <label class="block">
+                  <span>Doors To Access</span>
+                  {{form.doors_to_access}}
+                  
+                </label>
+
+                <div class="flex justify-center space-x-2 pt-4">
+                  <button
+                    class="btn min-w-[7rem] border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                  type="submit"
+                    class="btn min-w-[7rem] bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+                  >
+                    Save
+                  </button>
+                </div>
               </div>
-              <div class="flex justify-center space-x-2 pt-4">
-                <button
-                  class="btn min-w-[7rem] border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90"
-                >
-                  Cancel
-                </button>
-                <button
-                  class="btn min-w-[7rem] bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
-                >
-                  Save
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
       </main>
